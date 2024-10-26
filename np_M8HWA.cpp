@@ -39,12 +39,12 @@ int main(){
 	do {
 		
 		cout << "\ne) Enter Number\n";
-		cout << "a) Add\n";
-		cout << "s) Subtract\n";
-		cout << "m) Multiply\n";
-		cout << "d) Divide\n";
-		cout << "c) Clear Calculator\n";
-		cout << "q) Quit\n";
+		cout <<   "a) Add\n";
+		cout <<   "s) Subtract\n";
+		cout <<   "m) Multiply\n";
+		cout <<   "d) Divide\n";
+		cout <<   "c) Clear Calculator\n";
+		cout <<   "q) Quit\n";
 		cout << "\nChoice: ";
 
 		cin >> userChar;
@@ -52,7 +52,7 @@ int main(){
 
 		while (userChar != 'e' && userChar != 'a' && userChar != 's' && userChar != 'm' && userChar != 'd' && userChar != 'c' && userChar != 'q') {
 
-			cout << "Invalid input. Try again!\n";
+			cout << "\nInvalid input. Try again!\n";
 			cout << "Choice: ";
 			cin >> userChar;
 			
@@ -81,6 +81,7 @@ int main(){
 			break;
 		case 'c':
 			userCalc.clearArray();
+			cout << "\nAll values are cleared!\n";
 			break;
 		case 'q':
 			break;
@@ -88,7 +89,7 @@ int main(){
 
 	} while (userChar != 'q' && userChar != 'Q');
 
-	cout << "Quitting... Goodbye!\n\n\n";
+	cout << "\nQuitting... Goodbye!\n\n\n";
 
 	return 0;
 }
@@ -108,7 +109,7 @@ void Calculator::insertNum(double num) {
 	}
 	else {
 
-		cout << "Error insufficient space in array (value_array) max is 4\n";
+		cout << "\nFailed to enter the current number!\nNo room left for a new number!\n";
 
 
 	}
@@ -116,6 +117,8 @@ void Calculator::insertNum(double num) {
 
 }
 void Calculator::clearArray() {
+
+	
 
 	for (int i = 0; i < 4; i++) {
 		value_array[i] = 0;
@@ -130,14 +133,15 @@ void Calculator::add() {
 		cout << "\nEnter at least two numbers for calculation!\n";
 	}
 	else {
-
+		answer = value_array[0];
 		for (int i = 0; i < value_count; i++) {
 
-			answer = answer + value_array[i];
+			
 
 			cout << value_array[i];
 
 			if (i < value_count - 1 ){
+				answer = answer + value_array[i + 1];
 				cout << " + ";
 			}
 
@@ -146,13 +150,14 @@ void Calculator::add() {
 		}
 		cout << " = " << answer << "\n";
 
+		clearArray();
+		insertNum(answer);
+		answer = 0;
 	}
 
 	
 
-	this->clearArray();
-	this->insertNum(answer);
-	answer = 0;
+	
 
 }
 void Calculator::subtract() {
@@ -161,23 +166,24 @@ void Calculator::subtract() {
 	}
 	else {
 		answer = value_array[0];
-		for (int i = 1; i < value_count; i++) {
+		for (int i = 0; i < value_count; i++) {
 
-			answer = answer - value_array[i];
+			
 
 			cout << value_array[i];
 
-			if (i < value_count - 1) {
+			if (i < value_count -1) {
+				answer = answer - value_array[i + 1];
 				cout << " - ";
 			}
 		}
 		cout << " = " << answer << "\n";
+
+		clearArray();
+		insertNum(answer);
+		answer = 0;
 	}
-	this->clearArray();
-	value_count = 0;
-	this->insertNum(answer);
 	
-	answer = 0;
 }
 void Calculator::multiply() {
 	if (value_count < 2) {
@@ -185,23 +191,25 @@ void Calculator::multiply() {
 	}
 	else {
 		answer = value_array[0];
-		for (int i = 1; i < value_count; i++) {
+		for (int i = 0; i < value_count; i++) {
 
-			answer = answer * value_array[i];
+			
 
 			cout << value_array[i];
 
 			if (i < value_count - 1) {
+				answer = answer * value_array[i + 1];
 				cout << " * ";
 			}
 
 		}
 		cout << " = " << answer << "\n";
+
+		clearArray();
+		insertNum(answer);
+		answer = 0;
 	}
-	this->clearArray();
-	this->insertNum(answer);
-	value_count = 1;
-	answer = 0;
+	
 }
 void Calculator::divide() {
 	if (value_count < 2) {
@@ -209,20 +217,22 @@ void Calculator::divide() {
 	}
 	else {
 		answer = value_array[0];
-		for (int i = 1; i < value_count; i++) {
+		for (int i = 0; i < value_count; i++) {
 
-			answer = answer / value_array[i];
+			
 
 			cout << value_array[i];
 
 			if (i < value_count - 1) {
+				answer = answer / value_array[i + 1];
 				cout << " / ";
 			}
 		}
 		cout << " = " << answer << "\n";
+
+		clearArray();
+		insertNum(answer);
+		answer = 0;
 	}
-	this->clearArray();
-	this->insertNum(answer);
-	value_count = 1;
-	answer = 0;
+	
 }
