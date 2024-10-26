@@ -2,19 +2,227 @@
 //
 
 #include <iostream>
+using namespace std;
 
-int main()
-{
-    std::cout << "Hello World!\n";
+class Calculator {
+
+
+public:
+
+	Calculator();
+
+	void add();
+	void subtract();
+	void multiply();
+	void divide();
+
+	void insertNum(double num);
+	void clearArray();
+
+private:
+
+	double value_array[4];
+	int value_count;
+	double answer;
+
+
+};
+
+int main(){
+	char userChar;
+	Calculator userCalc;
+	double userDouble;
+
+	cout << "CALCULATOR\n";
+	cout << "What would you like to do?\n";
+
+	do {
+		
+		cout << "\ne) Enter Number\n";
+		cout << "a) Add\n";
+		cout << "s) Subtract\n";
+		cout << "m) Multiply\n";
+		cout << "d) Divide\n";
+		cout << "c) Clear Calculator\n";
+		cout << "q) Quit\n";
+		cout << "\nChoice: ";
+
+		cin >> userChar;
+		
+
+		while (userChar != 'e' && userChar != 'a' && userChar != 's' && userChar != 'm' && userChar != 'd' && userChar != 'c' && userChar != 'q') {
+
+			cout << "Invalid input. Try again!\n";
+			cout << "Choice: ";
+			cin >> userChar;
+			
+		}
+
+		
+
+		switch (userChar) {
+			
+		case 'e':
+			cout << "Enter a number into your calculator: ";
+			cin >> userDouble;
+			userCalc.insertNum(userDouble);
+			break;
+		case 'a':
+			userCalc.add();
+			break;
+		case 's':
+			userCalc.subtract();
+			break;
+		case 'm':
+			userCalc.multiply();
+			break;
+		case 'd':
+			userCalc.divide();
+			break;
+		case 'c':
+			userCalc.clearArray();
+			break;
+		case 'q':
+			break;
+		}
+
+	} while (userChar != 'q' && userChar != 'Q');
+
+	cout << "Quitting... Goodbye!\n\n\n";
+
+	return 0;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+Calculator::Calculator() : value_count(0), answer(0), value_array{ 0 } {
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+}
+
+void Calculator::insertNum(double num) {
+
+	if (value_count < 4) {
+
+		value_array[value_count] = num;
+
+
+		value_count++;
+	}
+	else {
+
+		cout << "Error insufficient space in array (value_array) max is 4\n";
+
+
+	}
+
+
+}
+void Calculator::clearArray() {
+
+	for (int i = 0; i < 4; i++) {
+		value_array[i] = 0;
+	}
+	value_count = 0;
+
+}
+
+void Calculator::add() {
+
+	if (value_count < 2) {
+		cout << "\nEnter at least two numbers for calculation!\n";
+	}
+	else {
+
+		for (int i = 0; i < value_count; i++) {
+
+			answer = answer + value_array[i];
+
+			cout << value_array[i];
+
+			if (i < value_count - 1 ){
+				cout << " + ";
+			}
+
+			
+
+		}
+		cout << " = " << answer << "\n";
+
+	}
+
+	
+
+	this->clearArray();
+	this->insertNum(answer);
+	answer = 0;
+
+}
+void Calculator::subtract() {
+	if (value_count < 2) {
+		cout << "\nEnter at least two numbers for calculation!\n";
+	}
+	else {
+		answer = value_array[0];
+		for (int i = 1; i < value_count; i++) {
+
+			answer = answer - value_array[i];
+
+			cout << value_array[i];
+
+			if (i < value_count - 1) {
+				cout << " - ";
+			}
+		}
+		cout << " = " << answer << "\n";
+	}
+	this->clearArray();
+	value_count = 0;
+	this->insertNum(answer);
+	
+	answer = 0;
+}
+void Calculator::multiply() {
+	if (value_count < 2) {
+		cout << "\nEnter at least two numbers for calculation!\n";
+	}
+	else {
+		answer = value_array[0];
+		for (int i = 1; i < value_count; i++) {
+
+			answer = answer * value_array[i];
+
+			cout << value_array[i];
+
+			if (i < value_count - 1) {
+				cout << " * ";
+			}
+
+		}
+		cout << " = " << answer << "\n";
+	}
+	this->clearArray();
+	this->insertNum(answer);
+	value_count = 1;
+	answer = 0;
+}
+void Calculator::divide() {
+	if (value_count < 2) {
+		cout << "\nEnter at least two numbers for calculation!\n";
+	}
+	else {
+		answer = value_array[0];
+		for (int i = 1; i < value_count; i++) {
+
+			answer = answer / value_array[i];
+
+			cout << value_array[i];
+
+			if (i < value_count - 1) {
+				cout << " / ";
+			}
+		}
+		cout << " = " << answer << "\n";
+	}
+	this->clearArray();
+	this->insertNum(answer);
+	value_count = 1;
+	answer = 0;
+}
