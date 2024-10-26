@@ -28,10 +28,10 @@ public:
 	//public member functions
 
 	//    operations
-	void add();
-	void subtract();
-	void multiply();
-	void divide();
+	void add();       // The operator functions work by incrimenting through the array and modifying the first element of the array
+	void subtract();  // with the elements of the array then clearing the used elements. In theory this should save computing time
+	void multiply();  // as the operation is done, saved in the existing allocated memory for the array, and clears array all in 
+	void divide();    // the same loop. Step by step is in function defenitions.
 
 	//    user memory functions
 	void insertNum(double& num);
@@ -43,9 +43,10 @@ private:
 	int value_count;
 	//double answer; //********************
 	//instruction file says to declare private member variable to store answer but, the 
-	//answer needs to be in the array for the next operation anyway so it should be 
-	//more efficient to store the answer in the first element of the array and have 
-	//the answer variable in a lower scope as the operator function's local variable
+	//first element of the array can be used to store the answer anyway as it carries
+	//over between operations. During the operations the changes can be made straight
+	//to the first element of the array and have the answer stored there instead of a local
+	// variable. In theory this should be faster and more efficient.
 
 
 
@@ -151,113 +152,124 @@ void Calculator::clearArray() {
 }
 
 void Calculator::add() {
-	double answer;
+	//double answer;
 	if (value_count < 2) { 
 		cout << "\nEnter at least two numbers for calculation!\n";
 	}
 	else {
-		answer = value_array[0]; // saves first value in temp variable
-		for (int i = 0; i < value_count; i++) {
+		//answer = value_array[0]; // saves first value in temp variable
+
+		cout << value_array[0]; // outputs first value before it is modified
+
+		for (int i = 0; i < value_count - 1; i++) { // value_count - 1 ensures that the operator is not printed the last time
 
 			
+				cout << " + "; 
 
-			cout << value_array[i];
+				cout << value_array[i + 1]; 
 
-			if (i < value_count - 1 ){
-				answer = answer + value_array[i + 1]; // avoids printing operator at the end of the equation and avoids applying fist term to itself
-				cout << " + ";
-			}
+				value_array[0] = value_array[0] + value_array[i + 1]; // stores answer in first element of array instead of temp variable
 
-			
-
+				value_array[i + 1] = 0; // clears used ement from array. avoids clearArray() function call
+				
 		}
-		cout << " = " << answer << "\n";
 
-		clearArray(); // clears array for next use
-		insertNum(answer); // stores temp answer variable into array above function scope to save for the next use
+		cout << " = " << value_array[0] << "\n";
+		value_count = 1; // inside of for loop clears the array out except the answer which is left in the first element. 
+		                 //Sets value_count to 1 to represent. Avoids clearArray() and insertNum() function calls, since
+						 //for loop is being used anyway
+		                  
+
+		//clearArray(); // clears array for next use
+		//insertNum(answer); // stores temp answer variable into array above function scope to save for the next use
 		//answer = 0; 
 	}
-
-	
-
-	
-
 }
 void Calculator::subtract() {
-	double answer;
+	//double answer;
 	if (value_count < 2) {
 		cout << "\nEnter at least two numbers for calculation!\n";
 	}
 	else {
-		answer = value_array[0];
-		for (int i = 0; i < value_count; i++) {
+		cout << value_array[0]; // outputs first value before it is modified
 
-			
+		for (int i = 0; i < value_count - 1; i++) { // value_count - 1 ensures that the operator is not printed the last time
 
-			cout << value_array[i];
 
-			if (i < value_count -1) {
-				answer = answer - value_array[i + 1];
-				cout << " - ";
-			}
+			cout << " - ";
+
+			cout << value_array[i + 1];
+
+			value_array[0] = value_array[0] - value_array[i + 1]; // stores answer in first element of array instead of temp variable
+
+			value_array[i + 1] = 0; // clears used element from array. avoids clearArray() function call
+
 		}
-		cout << " = " << answer << "\n";
 
-		clearArray();
-		insertNum(answer);
+		cout << " = " << value_array[0] << "\n";
+		value_count = 1;
+		//clearArray();
+		//insertNum(answer);
 		//answer = 0;
 	}
 	
 }
 void Calculator::multiply() {
-	double answer;
+	//double answer;
 	if (value_count < 2) {
 		cout << "\nEnter at least two numbers for calculation!\n";
 	}
 	else {
-		answer = value_array[0];
-		for (int i = 0; i < value_count; i++) {
+		cout << value_array[0]; // outputs first value before it is modified
 
-			
+		for (int i = 0; i < value_count - 1; i++) { // value_count - 1 ensures that the operator is not printed the last time
 
-			cout << value_array[i];
 
-			if (i < value_count - 1) {
-				answer = answer * value_array[i + 1];
-				cout << " * ";
-			}
+			cout << " * ";
+
+			cout << value_array[i + 1];
+
+			value_array[0] = value_array[0] * value_array[i + 1]; // stores answer in first element of array instead of temp variable
+
+			value_array[i + 1] = 0; // clears used element from array. avoids clearArray() function call
 
 		}
-		cout << " = " << answer << "\n";
 
-		clearArray();
-		insertNum(answer);
+		cout << " = " << value_array[0] << "\n";
+		value_count = 1;
+
+		//clearArray();
+		//insertNum(answer);
 		//answer = 0;
 	}
 	
 }
 void Calculator::divide() {
-	double answer;
+	//double answer;
 	if (value_count < 2) {
 		cout << "\nEnter at least two numbers for calculation!\n";
 	}
 	else {
-		answer = value_array[0];
-		for (int i = 0; i < value_count; i++) {
 
-			
+		cout << value_array[0]; // outputs first value before it is modified
 
-			cout << value_array[i];
+		for (int i = 0; i < value_count - 1; i++) { // value_count - 1 ensures that the operator is not printed the last time
 
-			if (i < value_count - 1) {
-				answer = answer / value_array[i + 1];
-				cout << " / ";
-			}
+
+			cout << " / ";
+
+			cout << value_array[i + 1];
+
+			value_array[0] = value_array[0] / value_array[i + 1]; // stores answer in first element of array instead of temp variable
+
+			value_array[i + 1] = 0; // clears used element from array. avoids clearArray() function call
+
 		}
-		cout << " = " << answer << "\n";
 
-		clearArray();
-		insertNum(answer);
+		cout << " = " << value_array[0] << "\n";
+		value_count = 1;
+		//clearArray();
+		//insertNum(answer);
 		//answer = 0;
 	}
 	
